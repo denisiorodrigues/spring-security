@@ -1,6 +1,5 @@
-package dev.dentech.spring_security.entity;
+package dev.dentech.spring_security.entidade;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +25,6 @@ public class Usuario implements UserDetails {
     private String nome;
     private String email;
     private String senha;
-    private LocalDateTime dataCriacao;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
