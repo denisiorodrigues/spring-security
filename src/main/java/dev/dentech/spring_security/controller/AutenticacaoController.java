@@ -3,6 +3,9 @@ package dev.dentech.spring_security.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +24,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/auth")
 public class AutenticacaoController {
     private final UsuarioRepositorio usuarioRepositorio;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
-    public AutenticacaoController(UsuarioRepositorio usuarioRepositorio) {
+    public AutenticacaoController(UsuarioRepositorio usuarioRepositorio, 
+        PasswordEncoder passwordEncoder, 
+        AuthenticationManager authenticationManager) {
+
         this.usuarioRepositorio = usuarioRepositorio;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
     
     @PostMapping("/login")
@@ -35,7 +45,7 @@ public class AutenticacaoController {
     public ResponseEntity<RegistroDoUsuarioResposta> registrar(@Valid @RequestBody RegistroUsuarioRequisicao requisicao) {
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(requisicao.email());
-        novoUsuario.setSenha(requisicao.senha());  
+        novoUsuario.setSenha(passwordEncoder.encode(requisicao.senha()));  
         novoUsuario.setNome(requisicao.nome());
         
         this.usuarioRepositorio.save(novoUsuario);
