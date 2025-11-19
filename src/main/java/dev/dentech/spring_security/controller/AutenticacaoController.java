@@ -1,9 +1,7 @@
 package dev.dentech.spring_security.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,15 +23,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AutenticacaoController {
     private final UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+    // private final AuthenticationManager authenticationManager;
 
     public AutenticacaoController(UsuarioRepositorio usuarioRepositorio, 
-        PasswordEncoder passwordEncoder, 
-        AuthenticationManager authenticationManager) {
+        PasswordEncoder passwordEncoder) {
+        // AuthenticationManager authenticationManager) {
 
         this.usuarioRepositorio = usuarioRepositorio;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
+        // this.authenticationManager = authenticationManager;
     }
     
     @PostMapping("/login")

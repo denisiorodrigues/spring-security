@@ -9,5 +9,5 @@ import dev.dentech.spring_security.entidade.Usuario;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> buscarUsuarioPorEmail(String email);
+    Optional<Usuario> findByEmail(String email);
 }

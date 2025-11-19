@@ -24,8 +24,8 @@ public class ConfiguracaoDeSeguranca {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                .requestMatchers(HttpMethod.POST, "/autenticacao/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/autenticacao/registrar").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/registrar").permitAll()
                 .anyRequest().authenticated()
             ).build();
     }

@@ -1,0 +1,16 @@
+@hostname = http://localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+### Requisição POST 
+POST {{host}}/auth/registrar
+Content-Type: application/json
+
+{
+    "nome": "João",
+    "email": "joao@exemplo.com",
+    "senha": "senhaSegura123"
+}
