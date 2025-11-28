@@ -4,6 +4,7 @@
 @contentType = application/json
 @createdAt = {{$datetime iso8601}}
 @modifiedBy = {{$processEnv USERNAME}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInN1YiI6ImRlbmlzaW9AdGVzdGUuY29tIiwiZXhwIjoxNzY0NDIxMzY0LCJpYXQiOjE3NjQzMzMzNzd9.6syUkR3w-nTHZUhOcFEH2criffwJk3a-ncqF0Oxndjw
 
 ### Requisição POST 
 POST {{host}}/auth/login
@@ -16,4 +17,5 @@ Content-Type: application/json
 
 ### Requisição GET de Teste 
 GET {{host}}/test
+Authorization: Bearer {{token}}
 Content-Type: application/json
