@@ -6,11 +6,14 @@
 @modifiedBy = {{$processEnv USERNAME}}
 
 ### Requisição POST 
-POST {{host}}/auth/registrar
+POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-    "nome": "Denisio",
     "email": "denisio@teste.com",
     "senha": "senhaSegura123!"
 }
+
+### Requisição GET de Teste 
+GET {{host}}/test
+Content-Type: application/json

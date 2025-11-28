@@ -3,11 +3,14 @@ package dev.dentech.spring_security.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.dentech.spring_security.configuracao.ConfiguracaoDeToken;
 import dev.dentech.spring_security.dto.requisicao.LoginRequisicao;
 import dev.dentech.spring_security.dto.requisicao.RegistroUsuarioRequisicao;
 import dev.dentech.spring_security.dto.resposta.LoginResposta;
@@ -23,20 +26,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AutenticacaoController {
     private final UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
-    // private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager gerenciadorDeAutenticacao;
+    private final ConfiguracaoDeToken configuracaoDeToken;
 
-    public AutenticacaoController(UsuarioRepositorio usuarioRepositorio, 
-        PasswordEncoder passwordEncoder) {
-        // AuthenticationManager authenticationManager) {
-
+    public AutenticacaoController(UsuarioRepositorio usuarioRepositorio, PasswordEncoder passwordEncoder,
+            AuthenticationManager gerenciadorDeAutenticacao, ConfiguracaoDeToken configuracaoDeToken) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.passwordEncoder = passwordEncoder;
-        // this.authenticationManager = authenticationManager;
+        this.gerenciadorDeAutenticacao = gerenciadorDeAutenticacao;
+        this.configuracaoDeToken = configuracaoDeToken;
     }
-    
+
     @PostMapping("/login")
     public ResponseEntity<LoginResposta> login(@Valid @RequestBody LoginRequisicao requisicao) {
-        return null;        
+        UsernamePasswordAuthenticationToken dadosDeLogin = 
+            new UsernamePasswordAuthenticationToken(requisicao.email(), requisicao.senha());
+
+        Authentication autenticacao = gerenciadorDeAutenticacao.authenticate(dadosDeLogin);
+        
+        Usuario usuarioAutenticado = (Usuario) autenticacao.getPrincipal();
+        String token = configuracaoDeToken.gerarToken(usuarioAutenticado);
+        return ResponseEntity.ok(new LoginResposta(token));
     }
 
     @PostMapping("/registrar")
